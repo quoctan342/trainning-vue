@@ -3,21 +3,47 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
+const DEFAULT_TITLE = 'Some Default Title';
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
+    meta: {
+      title: 'Home'
+    },
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/article',
+    component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/layout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Articles',
+        meta: {
+          title: 'Articles Page'
+        },
+        component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/index.vue'),
+      }, 
+      {
+        path: 'create',
+        name: 'CreateArticle',
+        meta: {
+          title: 'Create Article Page'
+        },
+        component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/create.vue'),
+      }
+    ]
+  },
+  {
+    path: '/book',
+    name: 'Book',
+    meta: {
+      title: 'Books Page'
+    },
+    component: () => import('@/modules/book/views/index.vue'),
+  },
 ]
 
 const router = new VueRouter({
@@ -25,5 +51,11 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.afterEach((to, from) => {
+  Vue.nextTick(() => {
+      document.title = to?.meta?.title || DEFAULT_TITLE;
+  });
+});
 
 export default router
