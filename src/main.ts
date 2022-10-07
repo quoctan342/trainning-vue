@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import './styles/scss/main.scss';
 import Vuelidate from 'vuelidate';
-
+Vue.prototype.$eventBus = new Vue();
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
