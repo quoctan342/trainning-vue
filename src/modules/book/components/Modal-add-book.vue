@@ -78,7 +78,7 @@ export default Vue.extend({
             title: '' as string,
             author: '' as string,
             category: 'Sách giáo khoa' as string,
-            cost: 0 as number,
+            cost: 0 as string,
             sale: 0 as number,
         };
     },
@@ -115,6 +115,14 @@ export default Vue.extend({
                 this.submitStatus = 'ERROR';
             } else {
                 this.submitStatus = 'OK';
+                this.$eventBus.$emit('onAddNewBook', {
+                    title: this.title,
+                    author: this.author,
+                    category: this.category,
+                    cost: this.cost,
+                    sale: this.sale,
+                    img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
+                });
                 this.toggle = !this.toggle;
             }
         },
