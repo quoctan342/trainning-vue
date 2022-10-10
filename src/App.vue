@@ -1,13 +1,26 @@
 <template>
-    <div id="app">
+    <v-app>
         <nav>
             <router-link to="/">Home</router-link> | <router-link to="/article">Article</router-link> |
             <router-link to="/book">Book</router-link>
         </nav>
-        <router-view />
-    </div>
+        <v-main>
+            <router-view />
+        </v-main>
+    </v-app>
 </template>
 
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+    name: 'App',
+
+    data: () => ({
+        //
+    }),
+});
+</script>
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
