@@ -39,7 +39,7 @@
                 <div class="input-group">
                     <label class="left" for="Cost">Cost</label>
                     <div class="right">
-                        <input type="text" id="Cost" v-model="$v.cost.$model" />
+                        <input type="text" id="Cost" v-model.number="$v.cost.$model" />
                         <div class="error" v-if="$v.cost.$error && !$v.cost.required">Field is required!</div>
                         <div class="error" v-if="$v.cost.$error && !$v.cost.numeric">Must be number!</div>
                     </div>
@@ -47,7 +47,7 @@
                 <div class="input-group">
                     <label class="left" for="Sale">Sale</label>
                     <div class="right">
-                        <input type="text" id="Sale" v-model="$v.sale.$model" />
+                        <input type="text" id="Sale" v-model.number="$v.sale.$model" />
                         <div class="error" v-if="$v.sale.$error && !$v.sale.numeric">Must be number!</div>
                     </div>
                 </div>
@@ -59,13 +59,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import VueModal from '@/components/Vue-modal.vue';
+import { Book } from '@/types';
 import { required, numeric } from 'vuelidate/lib/validators';
+import VueModal from '@/components/Vue-modal.vue';
 
 export default Vue.extend({
-    name: 'modal-add-book',
+    name: 'modal-new-book',
     components: {
-        'vue-modal': VueModal,
+        VueModal,
     },
     props: {
         value: {
@@ -73,15 +74,13 @@ export default Vue.extend({
             default: false,
         },
     },
-    data() {
-        return {
-            title: '' as string,
-            author: '' as string,
-            category: 'Sách giáo khoa' as string,
-            cost: 0 as string,
-            sale: 0 as number,
-        };
-    },
+    data: () => ({
+        title: '' as string,
+        author: '' as string,
+        category: 'Sách giáo khoa' as string,
+        cost: '' as string,
+        sale: '' as number,
+    }),
     validations: {
         title: {
             required,
@@ -120,7 +119,7 @@ export default Vue.extend({
                     author: this.author,
                     category: this.category,
                     cost: this.cost,
-                    sale: this.sale,
+                    sale: this.sale == '' ? 0 : this.sale,
                     img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
                 });
                 this.toggle = !this.toggle;
@@ -131,13 +130,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.form {
+.books {
+    padding-top: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.btn {
-    margin-top: 10px;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 </style>

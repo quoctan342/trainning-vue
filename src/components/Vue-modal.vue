@@ -2,7 +2,7 @@
     <div class="vue-modal" :class="{ 'is-active': toggle }" @click.self="disableModal">
         <div class="vue-modal-wrap">
             <div class="vue-modal-header">{{ title }}</div>
-            <div class="vue-modal-body" ref="body">
+            <div class="vue-modal-body">
                 <slot></slot>
             </div>
         </div>
@@ -13,15 +13,13 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-    name: 'vue-modal',
+    name: 'vue-book',
     props: {
         value: {
             type: Boolean,
-            default: false,
         },
         title: {
             type: String,
-            default: 'Title Modal',
         },
     },
     computed: {
@@ -38,13 +36,6 @@ export default Vue.extend({
         disableModal(): void {
             this.toggle = false;
         },
-    },
-    mounted() {
-        let body = document.querySelector('body');
-        body?.appendChild(this.$el);
-    },
-    beforeDestroy() {
-        this.$el.remove();
     },
 });
 </script>
@@ -63,6 +54,7 @@ export default Vue.extend({
     visibility: hidden;
     text-align: center;
     overflow: hidden auto;
+
     &:before {
         display: inline-block;
         width: 0;
@@ -122,8 +114,5 @@ export default Vue.extend({
             opacity: 1;
         }
     }
-}
-.f-height {
-    height: 100%;
 }
 </style>
