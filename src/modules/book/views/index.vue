@@ -1,7 +1,7 @@
 <template>
     <div>
         <button @click="toggleModalAddBook" class="btn btn-primary">Add new book (using Vuelidate)</button>
-        <modal-add-book v-model="modalAddBook"></modal-add-book>
+        <modal-new-book v-model="modalAddBook"></modal-new-book>
         <div class="books">
             <vue-book v-for="(book, index) in books" :key="index" :item="book"></vue-book>
         </div>
@@ -10,17 +10,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import ModalAddBook from '../components/Modal-add-book.vue';
+import ModalNewBook from '@/modules/book/components/modal-new-book.vue';
 import { Book } from '@/types';
 import VueBookTicket from '@/components/Vue-book-ticket.vue';
+import { required, numeric } from 'vuelidate/lib/validators';
 
 export default Vue.extend({
     name: 'Book-page',
     components: {
-        ModalAddBook,
+        ModalNewBook,
         'vue-book': VueBookTicket,
     },
-    data() {
+    data(): any {
         return {
             books: [] as Book[],
             modalAddBook: false as boolean,
@@ -34,9 +35,9 @@ export default Vue.extend({
             this.books.push(payload);
         },
     },
-    created() {
+    created(): void {
         this.books.push({
-            title: 'Sách số 1',
+            title: 'sas',
             author: 'Nguyễn Nhật Ánh',
             category: 'Văn học thiếu nhi',
             cost: 111000,
@@ -59,9 +60,11 @@ export default Vue.extend({
             sale: 26,
             img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
         });
+    },
+    mounted(): void {
         this.$eventBus.$on('onAddNewBook', this.addNewBook);
     },
-    beforeDestroy() {
+    beforeDestroy(): void {
         this.$eventBus.$off('onAddNewBook', this.addNewBook);
     },
 });
