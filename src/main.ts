@@ -5,6 +5,7 @@ import store from './store';
 import Vuelidate from 'vuelidate';
 import vuetify from './plugins/vuetify';
 import './styles/scss/main.scss';
+import './plugins/Veevalidate';
 
 Vue.config.productionTip = false;
 Vue.prototype.$eventBus = new Vue();

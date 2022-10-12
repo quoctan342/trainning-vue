@@ -56,7 +56,6 @@
                     <div class="right">
                         <v-menu
                             ref="menu"
-                            v-model="menu"
                             :close-on-content-click="false"
                             :return-value.sync="$v.publishingdate.$model"
                             transition="scale-transition"
