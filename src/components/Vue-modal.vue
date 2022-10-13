@@ -93,12 +93,7 @@ export default Vue.extend({
     &-body {
         min-height: 20px;
         overflow: hidden;
-        display: flex;
-        flex: 1;
-        flex-direction: column;
         padding: 10px;
-        justify-content: center;
-        align-items: center;
     }
     &-footer {
         border-top: 1px solid #ccc;

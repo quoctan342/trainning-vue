@@ -1,7 +1,11 @@
 <template>
     <div>
-        <button @click="toggleModalAddBook" class="btn btn-primary">Add new book (using Vuelidate)</button>
+        <div class="btn-group">
+            <button @click="toggleModalAddBook" class="btn btn-primary">Add new book (using Vuelidate)</button>
+            <button @click="toggleModalAddBookVee" class="btn btn-primary">Add new book (using Veevalidate)</button>
+        </div>
         <modal-new-book v-model="modalAddBook"></modal-new-book>
+        <modal-add-book v-model="modalAddBookVee"></modal-add-book>
         <div class="books">
             <vue-book v-for="(book, index) in books" :key="index" :item="book"></vue-book>
         </div>
@@ -11,6 +15,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import ModalNewBook from '@/modules/book/components/modal-new-book.vue';
+import ModalAddBook from '@/modules/book/components/modal-add-book.vue';
 import { Book } from '@/types';
 import VueBookTicket from '@/components/Vue-book-ticket.vue';
 import { required, numeric } from 'vuelidate/lib/validators';
@@ -19,17 +24,22 @@ export default Vue.extend({
     name: 'Book-page',
     components: {
         ModalNewBook,
+        ModalAddBook,
         'vue-book': VueBookTicket,
     },
     data(): any {
         return {
             books: [] as Book[],
             modalAddBook: false as boolean,
+            modalAddBookVee: false as boolean,
         };
     },
     methods: {
         toggleModalAddBook(): void {
             this.modalAddBook = !this.modalAddBook;
+        },
+        toggleModalAddBookVee(): void {
+            this.modalAddBookVee = !this.modalAddBookVee;
         },
         addNewBook(payload: Book): void {
             this.books.push(payload);
@@ -76,5 +86,13 @@ export default Vue.extend({
     display: flex;
     gap: 25px;
     flex-wrap: wrap;
+}
+
+.btn {
+    &-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
 }
 </style>

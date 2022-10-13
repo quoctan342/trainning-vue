@@ -1,13 +1,22 @@
+@import "./partials/animation";
 @import "./partials/button";
 @import "./partials/input";
 @import "./partials/status";
 
 .left {
     text-align: right;
-    width: 100%;
+    width: 150px;
 }
 
 .right {
     text-align: left;
-    width: 100%;
+    width: calc(100% - 150px);
+    margin-left: 5px;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
