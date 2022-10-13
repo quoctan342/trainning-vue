@@ -1,8 +1,10 @@
 <template>
     <v-app>
         <nav>
-            <router-link to="/">Home</router-link> | <router-link to="/article">Article</router-link> |
-            <router-link to="/book">Book</router-link>
+            <router-link to="/">Home</router-link> |
+            <router-link to="/article">Article (Example Nested Router)</router-link> |
+            <router-link to="/book">Book not with Vuex </router-link> |
+            <router-link to="/joke">Joke (Example API with Axios)</router-link>
         </nav>
         <v-main>
             <router-view />

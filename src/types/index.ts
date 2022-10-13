@@ -6,3 +6,10 @@ export interface Book {
     sale?: number;
     img: string;
 }
+
+export interface Joke {
+    joke: string;
+    id: string;
+    status?: number;
+    message?: string | undefined;
+}
