@@ -13,21 +13,20 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-    name: 'vue-book',
+    name: 'vue-modal',
     props: {
         value: {
             type: Boolean,
+            default: false,
         },
-        title: {
-            type: String,
-        },
+        title: String,
     },
     computed: {
         toggle: {
             get(): boolean {
                 return this.value;
             },
-            set(value: boolean) {
+            set(value: boolean): void {
                 this.$emit('input', value);
             },
         },

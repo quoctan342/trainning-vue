@@ -60,6 +60,14 @@ const routes: Array<RouteConfig> = [
         },
         component: () => import('@/modules/joke/views/index.vue'),
     },
+    {
+        path: '/bookwithvuex',
+        name: 'Book With Vuex',
+        meta: {
+            title: 'Book Page',
+        },
+        component: () => import('@/modules/bookWithVuex/views/index.vue'),
+    },
 ];
 
 const router = new VueRouter({
