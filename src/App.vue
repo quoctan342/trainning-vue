@@ -1,5 +1,6 @@
 <template>
-    <v-app>
+    <v-app
+        ><v-progress-linear v-show="is_loading" indeterminate color="green"></v-progress-linear>
         <nav>
             <router-link to="/">Home</router-link> |
             <router-link to="/article">Article (Example Nested Router)</router-link> |
@@ -15,6 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
     name: 'App',
@@ -22,6 +24,9 @@ export default Vue.extend({
     data: () => ({
         //
     }),
+    computed: {
+        ...mapState(['is_loading']),
+    },
 });
 </script>
 <style>
