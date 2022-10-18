@@ -6,9 +6,15 @@ Vue.use(Vuex);
 import book from './book';
 
 export default new Vuex.Store({
-    state: {},
+    state: {
+        is_loading: false as boolean,
+    },
     getters: {},
-    mutations: {},
+    mutations: {
+        SET_LOADING(state: any, payload: boolean): void {
+            state.is_loading = payload;
+        },
+    },
     actions: {},
     modules: {
         book,

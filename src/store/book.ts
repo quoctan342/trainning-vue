@@ -1,47 +1,63 @@
-import { Book } from '@/types/index';
+import { Book, BookState } from "@/types/index";
 
 const state = {
-    books: [
-        {
-            title: 'Sách số 1',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        },
-        {
-            title: 'Sách số 2',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        },
-        {
-            title: 'Sách số 3',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        },
-    ] as Book[],
+  books: [
+    {
+      id: 1,
+      title: "Sách số 1",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      publishingdate: "2022-10-09",
+    },
+    {
+      id: 2,
+      title: "Sách số 2",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      publishingdate: "2022-10-09",
+    },
+    {
+      id: 3,
+      title: "Sách số 3",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      publishingdate: "2022-10-09",
+    },
+  ] as Book[],
 };
 const getters = {};
 
 const mutations = {
-    ADD_BOOK(state: any, payload: Book): void {
-        state.books.push(payload);
-    },
+  ADD_BOOK(state: BookState, payload: Book): void {
+    state.books.push(payload);
+  },
+  UPDATE_BOOK(state: BookState, payload: Book): void {
+    for (const book of state.books) {
+      if (book.id === payload.id) {
+        if (book.title != payload.title) book.title = payload.title;
+        if (book.author != payload.author) book.author = payload.author;
+        if (book.category != payload.category) book.category = payload.category;
+        if (book.cost != payload.cost) book.cost = payload.cost;
+        if (book.sale != payload.sale) book.sale = payload.sale;
+        if (book.publishingdate != payload.publishingdate)
+          book.publishingdate = payload.publishingdate;
+      }
+    }
+  },
 };
 
 const actions = {};
 
 export default {
-    state,
-    mutations,
-    getters,
-    actions,
-    namespaced: true,
+  state,
+  mutations,
+  getters,
+  actions,
+  namespaced: true,
 };
