@@ -1,98 +1,107 @@
 <template>
-    <div>
-        <div class="btn-group">
-            <button @click="toggleModalAddBook" class="btn btn-primary">Add new book (using Vuelidate)</button>
-            <button @click="toggleModalAddBookVee" class="btn btn-primary">Add new book (using Veevalidate)</button>
-        </div>
-        <modal-new-book v-model="modalAddBook"></modal-new-book>
-        <modal-add-book v-model="modalAddBookVee"></modal-add-book>
-        <div class="books">
-            <vue-book v-for="(book, index) in books" :key="index" :item="book"></vue-book>
-        </div>
+  <div>
+    <h2>Book page</h2>
+    <div class="btn-group">
+      <button @click="toggleModalAddBook" class="btn btn-primary">
+        Add new book (using Vuelidate)
+      </button>
+      <button @click="toggleModalAddBookVee" class="btn btn-primary">
+        Add new book (using Veevalidate)
+      </button>
     </div>
+    <modal-new-book v-model="modalAddBook"></modal-new-book>
+    <modal-add-book v-model="modalAddBookVee"></modal-add-book>
+    <div class="books">
+      <vue-book
+        v-for="(book, index) in books"
+        :key="index"
+        :item="book"
+      ></vue-book>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import ModalNewBook from '@/modules/book/components/modal-new-book.vue';
-import ModalAddBook from '@/modules/book/components/modal-add-book.vue';
-import { Book } from '@/types';
-import VueBookTicket from '@/components/Vue-book-ticket.vue';
-import { required, numeric } from 'vuelidate/lib/validators';
+import Vue from "vue";
+import ModalNewBook from "@/modules/book/components/modal-new-book.vue";
+import ModalAddBook from "@/modules/book/components/modal-add-book.vue";
+import { Book } from "@/types";
+import VueBookTicket from "@/components/Vue-book-ticket.vue";
+import { required, numeric } from "vuelidate/lib/validators";
 
 export default Vue.extend({
-    name: 'Book-page',
-    components: {
-        ModalNewBook,
-        ModalAddBook,
-        'vue-book': VueBookTicket,
+  name: "Book-page",
+  components: {
+    ModalNewBook,
+    ModalAddBook,
+    "vue-book": VueBookTicket,
+  },
+  data(): any {
+    return {
+      books: [] as Book[],
+      modalAddBook: false as boolean,
+      modalAddBookVee: false as boolean,
+    };
+  },
+  methods: {
+    toggleModalAddBook(): void {
+      this.modalAddBook = !this.modalAddBook;
     },
-    data(): any {
-        return {
-            books: [] as Book[],
-            modalAddBook: false as boolean,
-            modalAddBookVee: false as boolean,
-        };
+    toggleModalAddBookVee(): void {
+      this.modalAddBookVee = !this.modalAddBookVee;
     },
-    methods: {
-        toggleModalAddBook(): void {
-            this.modalAddBook = !this.modalAddBook;
-        },
-        toggleModalAddBookVee(): void {
-            this.modalAddBookVee = !this.modalAddBookVee;
-        },
-        addNewBook(payload: Book): void {
-            this.books.push(payload);
-        },
+    addNewBook(payload: Book): void {
+      this.books.push(payload);
     },
-    created(): void {
-        this.books.push({
-            title: 'sas',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        });
-        this.books.push({
-            title: 'Sách số 2',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        });
-        this.books.push({
-            title: 'Sách số 3',
-            author: 'Nguyễn Nhật Ánh',
-            category: 'Văn học thiếu nhi',
-            cost: 111000,
-            sale: 26,
-            img: 'https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg',
-        });
-    },
-    mounted(): void {
-        this.$eventBus.$on('onAddNewBook', this.addNewBook);
-    },
-    beforeDestroy(): void {
-        this.$eventBus.$off('onAddNewBook', this.addNewBook);
-    },
+  },
+  created(): void {
+    this.books.push({
+      title: "sas",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+    });
+    this.books.push({
+      title: "Sách số 2",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+    });
+    this.books.push({
+      title: "Sách số 3",
+      author: "Nguyễn Nhật Ánh",
+      category: "Văn học thiếu nhi",
+      cost: 111000,
+      sale: 26,
+      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+    });
+  },
+  mounted(): void {
+    this.$eventBus.$on("onAddNewBook", this.addNewBook);
+  },
+  beforeDestroy(): void {
+    this.$eventBus.$off("onAddNewBook", this.addNewBook);
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 .books {
-    padding-top: 20px;
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
+  padding-top: 20px;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 .btn {
-    &-group {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
+  &-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
 }
 </style>

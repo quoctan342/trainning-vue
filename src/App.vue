@@ -1,6 +1,6 @@
 <template>
     <v-app
-        ><v-progress-linear v-show="is_loading" indeterminate color="green"></v-progress-linear>
+        ><v-progress-linear v-show="is_loading" fixed indeterminate color="green"></v-progress-linear>
         <nav>
             <router-link to="/">Home</router-link> |
             <router-link to="/article">Article (Example Nested Router)</router-link> |
