@@ -7,6 +7,7 @@ import vuetify from "./plugins/vuetify";
 import VueMoment from "vue-moment";
 import "./styles/scss/main.scss";
 import "./plugins/Veevalidate";
+import "./plugins/Directive";
 
 Vue.config.productionTip = false;
 Vue.prototype.$eventBus = new Vue();

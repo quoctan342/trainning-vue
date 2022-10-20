@@ -120,20 +120,20 @@
           </div>
         </div>
       </div>
-      <button @click="handleAddBook" class="btn btn-primary">Add</button>
+      <button @click="handleUpdateBook" class="btn btn-primary">Update</button>
     </vue-modal>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
 import { Book } from "@/types";
 import { required, numeric, maxValue } from "vuelidate/lib/validators";
 import VueModal from "@/components/Vue-modal.vue";
 import { validateDateBefore } from "@/plugins/Vuelidate/customValidate";
 
 export default Vue.extend({
-  name: "modal-new-book",
+  name: "modal-update-book-vuex",
   components: {
     VueModal,
   },
@@ -142,8 +142,8 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
-    currentLastID: {
-      type: Number,
+    book: {
+      type: Object as PropType<Book>,
     },
   },
   data: () => ({
@@ -166,8 +166,8 @@ export default Vue.extend({
       numeric,
     },
     sale: {
-      numeric,
       maxValue: maxValue(100),
+      numeric,
     },
     publishingdate: {
       required,
@@ -191,22 +191,22 @@ export default Vue.extend({
   methods: {
     resetForm(): void {
       //reset form
-      this.title = "";
-      this.author = "";
-      this.category = "Sách giáo khoa";
-      this.cost = "";
-      this.sale = "";
-      this.publishingdate = "";
+      this.title = this.book.title;
+      this.author = this.book.author;
+      this.category = this.book.category;
+      this.cost = this.book.cost;
+      this.sale = this.book.sale;
+      this.publishingdate = this.book.publishingdate;
       this.$v.$reset();
     },
-    handleAddBook(): void {
+    handleUpdateBook(): void {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         this.submitStatus = "OK";
-        this.$eventBus.$emit("onAddNewBook", {
-          id: this.currentLastID + 1,
+        this.$eventBus.$emit("onUpdateBook", {
+          id: this.book.id,
           title: this.title,
           author: this.author,
           category: this.category,
@@ -214,7 +214,6 @@ export default Vue.extend({
           sale: this.sale == "" ? 0 : this.sale,
           publishingdate: this.publishingdate,
         });
-
         this.toggle = !this.toggle;
       }
     },

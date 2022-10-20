@@ -46,7 +46,7 @@
     </div>
     <div>
       <p>Async Validation with Vuelidate (Validate id)</p>
-      <input type="text" v-model="$v.asyncValidate.$model" />
+      <input type="text" v-focus v-model="$v.asyncValidate.$model" />
       <div v-if="is_loading" class="text-center">
         <v-progress-circular indeterminate color="green"></v-progress-circular>
       </div>
