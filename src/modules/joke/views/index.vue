@@ -17,7 +17,7 @@
     </div>
     <div class="section">
       <p>Search joke:</p>
-      <input type="text" v-model="$v.search_joke.$model" />
+      <input type="text" v-focus v-model="$v.search_joke.$model" />
       <div
         class="error"
         v-if="$v.search_joke.$error && !$v.search_joke.required"
@@ -46,7 +46,7 @@
     </div>
     <div>
       <p>Async Validation with Vuelidate (Validate id)</p>
-      <input type="text" v-focus v-model="$v.asyncValidate.$model" />
+      <input type="text" v-model="$v.asyncValidate.$model" />
       <div v-if="is_loading" class="text-center">
         <v-progress-circular indeterminate color="green"></v-progress-circular>
       </div>

@@ -11,7 +11,11 @@
             <div class="input-group">
               <label class="left" for="Title">Title:</label>
               <div class="right" :class="classes">
-                <input type="text" v-focus v-model.trim="title" />
+                <input
+                  type="text"
+                  v-invalid="errors.length === 0"
+                  v-model.trim="title"
+                />
                 <div class="message">{{ errors[0] }}</div>
               </div>
             </div>
@@ -24,7 +28,11 @@
             <div class="input-group">
               <label class="left" for="Author">Author:</label>
               <div class="right" :class="classes">
-                <input type="text" v-model.trim="author" />
+                <input
+                  type="text"
+                  v-invalid="errors.length === 0"
+                  v-model.trim="author"
+                />
                 <div class="message">{{ errors[0] }}</div>
               </div>
             </div>
@@ -47,7 +55,11 @@
             <div class="input-group">
               <label class="left" for="Cost">Cost:</label>
               <div class="right" :class="classes">
-                <input type="text" v-model.number="cost" />
+                <input
+                  type="text"
+                  v-invalid="errors.length === 0"
+                  v-model.number="cost"
+                />
                 <div class="message">{{ errors[0] }}</div>
               </div>
             </div>
@@ -60,7 +72,11 @@
             <div class="input-group">
               <label class="left" for="Sale">Sale:</label>
               <div class="right" :class="classes">
-                <input type="text" v-model.number="sale" />
+                <input
+                  type="text"
+                  v-invalid="errors.length === 0"
+                  v-model.number="sale"
+                />
                 <div class="message">{{ errors[0] }}</div>
               </div>
             </div>
@@ -85,6 +101,7 @@
                     <div :class="classes">
                       <input
                         type="text"
+                        v-invalid="errors.length === 0"
                         v-model="publishingdate"
                         id="PublishDate"
                         v-bind="attrs"

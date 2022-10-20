@@ -10,6 +10,7 @@
               type="text"
               id="Title"
               v-model.trim="$v.title.$model"
+              v-invalid="!$v.title.$error"
             />
             <div class="error" v-if="$v.title.$error && !$v.title.required">
               Field is required!
@@ -23,6 +24,7 @@
               :class="{ 'input-error': $v.author.$error }"
               type="text"
               id="Author"
+              v-invalid="!$v.author.$error"
               v-model.trim="$v.author.$model"
             />
             <div class="error" v-if="$v.author.$error && !$v.author.required">
@@ -43,7 +45,12 @@
         <div class="input-group">
           <label class="left" for="Cost">Cost</label>
           <div class="right">
-            <input type="text" id="Cost" v-model.number="$v.cost.$model" />
+            <input
+              type="text"
+              v-invalid="!$v.cost.$error"
+              id="Cost"
+              v-model.number="$v.cost.$model"
+            />
             <div class="error" v-if="$v.cost.$error && !$v.cost.required">
               Field is required!
             </div>
@@ -55,7 +62,12 @@
         <div class="input-group">
           <label class="left" for="Sale">Sale</label>
           <div class="right">
-            <input type="text" id="Sale" v-model.number="$v.sale.$model" />
+            <input
+              type="text"
+              v-invalid="!$v.sale.$error"
+              id="Sale"
+              v-model.number="$v.sale.$model"
+            />
             <div class="error" v-if="$v.sale.$error && !$v.sale.numeric">
               Must be number!
             </div>
@@ -78,6 +90,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <input
                   type="text"
+                  v-invalid="!$v.publishingdate.$error"
                   v-model="$v.publishingdate.$model"
                   id="PublishDate"
                   v-bind="attrs"
@@ -246,5 +259,9 @@ select {
 input {
   border: 1px solid #000;
   border-radius: 5px;
+}
+
+.error {
+  background: none;
 }
 </style>
