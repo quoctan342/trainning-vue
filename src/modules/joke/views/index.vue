@@ -177,4 +177,9 @@ export default Vue.extend({
 .btn-group {
   margin-top: 10px;
 }
+
+input {
+  border: 1px solid #000;
+  border-radius: 5px;
+}
 </style>

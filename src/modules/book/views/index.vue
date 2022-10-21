@@ -9,11 +9,18 @@
         Add new book (using Veevalidate)
       </button>
     </div>
-    <modal-new-book v-model="modalAddBook"></modal-new-book>
+    <modal-new-book
+      v-model="modalAddBook"
+      :currentLastID="books.length"
+    ></modal-new-book>
     <modal-add-book
       :currentLastID="books.length"
       v-model="modalAddBookVee"
     ></modal-add-book>
+    <modal-add-book-vuetify
+      v-model="modalAddBookVuetify"
+      :currentLastID="books.length"
+    ></modal-add-book-vuetify>
     <div class="book-list">
       <div
         class="book-item"
