@@ -17,7 +17,7 @@
     </div>
     <div class="section">
       <p>Search joke:</p>
-      <input type="text" v-model="$v.search_joke.$model" />
+      <input type="text" v-focus v-model="$v.search_joke.$model" />
       <div
         class="error"
         v-if="$v.search_joke.$error && !$v.search_joke.required"
@@ -176,5 +176,10 @@ export default Vue.extend({
 
 .btn-group {
   margin-top: 10px;
+}
+
+input {
+  border: 1px solid #000;
+  border-radius: 5px;
 }
 </style>

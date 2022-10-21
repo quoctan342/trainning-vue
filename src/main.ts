@@ -3,10 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Vuelidate from "vuelidate";
-import vuetify from "./plugins/vuetify";
+import vuetify from "./plugins/Vuetify";
 import VueMoment from "vue-moment";
 import "./styles/scss/main.scss";
 import "./plugins/Veevalidate";
+import "./plugins/Directive";
 
 Vue.config.productionTip = false;
 Vue.prototype.$eventBus = new Vue();

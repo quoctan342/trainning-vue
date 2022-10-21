@@ -9,14 +9,31 @@
         Add new book (using Veevalidate)
       </button>
     </div>
-    <modal-new-book v-model="modalAddBook"></modal-new-book>
-    <modal-add-book v-model="modalAddBookVee"></modal-add-book>
-    <div class="books">
-      <vue-book
+    <modal-new-book
+      v-model="modalAddBook"
+      :currentLastID="books.length"
+    ></modal-new-book>
+    <modal-add-book
+      :currentLastID="books.length"
+      v-model="modalAddBookVee"
+    ></modal-add-book>
+    <modal-add-book-vuetify
+      v-model="modalAddBookVuetify"
+      :currentLastID="books.length"
+    ></modal-add-book-vuetify>
+    <div class="book-list">
+      <div
+        class="book-item"
         v-for="(book, index) in books"
         :key="index"
-        :item="book"
-      ></vue-book>
+        @click="enableUpdateBook(index)"
+      >
+        <vue-book :item="book"></vue-book>
+      </div>
+      <modal-update-book
+        v-model="modalUpdateBook"
+        :book="books[`${bookSelected}`]"
+      ></modal-update-book>
     </div>
   </div>
 </template>
@@ -28,6 +45,7 @@ import ModalAddBook from "@/modules/book/components/modal-add-book.vue";
 import { Book } from "@/types";
 import VueBookTicket from "@/components/Vue-book-ticket.vue";
 import { required, numeric } from "vuelidate/lib/validators";
+import ModalUpdateBook from "@/modules/book/components/modal-update-book.vue";
 
 export default Vue.extend({
   name: "Book-page",
@@ -35,12 +53,15 @@ export default Vue.extend({
     ModalNewBook,
     ModalAddBook,
     "vue-book": VueBookTicket,
+    "modal-update-book": ModalUpdateBook,
   },
-  data(): any {
+  data() {
     return {
       books: [] as Book[],
       modalAddBook: false as boolean,
       modalAddBookVee: false as boolean,
+      modalUpdateBook: false as boolean,
+      bookSelected: 0 as number,
     };
   },
   methods: {
@@ -53,50 +74,79 @@ export default Vue.extend({
     addNewBook(payload: Book): void {
       this.books.push(payload);
     },
+    handleUpdateBook(payload: Book): void {
+      for (const book of this.books) {
+        if (book.id === payload.id) {
+          if (book.title != payload.title) book.title = payload.title;
+          if (book.author != payload.author) book.author = payload.author;
+          if (book.category != payload.category)
+            book.category = payload.category;
+          if (book.cost != payload.cost) book.cost = payload.cost;
+          if (book.sale != payload.sale) book.sale = payload.sale;
+          if (book.publishingdate != payload.publishingdate)
+            book.publishingdate = payload.publishingdate;
+        }
+      }
+    },
+    enableUpdateBook(index: number): void {
+      this.bookSelected = index;
+      this.modalUpdateBook = true;
+    },
   },
   created(): void {
     this.books.push({
+      id: 1,
       title: "sas",
       author: "Nguyễn Nhật Ánh",
       category: "Văn học thiếu nhi",
       cost: 111000,
       sale: 26,
-      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+      publishingdate: "2022-10-09",
     });
     this.books.push({
+      id: 2,
       title: "Sách số 2",
       author: "Nguyễn Nhật Ánh",
       category: "Văn học thiếu nhi",
       cost: 111000,
       sale: 26,
-      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+      publishingdate: "2022-10-09",
     });
     this.books.push({
+      id: 3,
       title: "Sách số 3",
       author: "Nguyễn Nhật Ánh",
       category: "Văn học thiếu nhi",
       cost: 111000,
       sale: 26,
-      img: "https://salt.tikicdn.com/cache/w444/ts/product/a2/57/b6/cac2e0ac6f4395d400d29f1aba941d68.jpg",
+      publishingdate: "2022-10-09",
     });
   },
   mounted(): void {
     this.$eventBus.$on("onAddNewBook", this.addNewBook);
+    this.$eventBus.$on("onUpdateBook", this.handleUpdateBook);
   },
   beforeDestroy(): void {
     this.$eventBus.$off("onAddNewBook", this.addNewBook);
+    this.$eventBus.$off("onUpdateBook", this.handleUpdateBook);
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.books {
-  padding-top: 20px;
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-}
+.book {
+  &-list {
+    padding-top: 20px;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 10px;
+  }
 
+  &-item {
+    cursor: pointer;
+  }
+}
 .btn {
   &-group {
     display: flex;
