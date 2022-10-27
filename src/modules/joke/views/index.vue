@@ -136,7 +136,7 @@ export default Vue.extend({
     },
     async searchJokeByID() {
       this.$v.search_joke.$touch();
-      if (this.$v.$invalid) {
+      if (this.$v.search_joke.$invalid) {
         return;
       }
       try {

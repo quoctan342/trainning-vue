@@ -10,6 +10,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   function (config) {
     store.commit("SET_LOADING", true);
+    console.log(store.state.is_loading);
     return config;
   },
   function (error) {
@@ -20,6 +21,7 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   function (response) {
     store.commit("SET_LOADING", false);
+    console.log(store.state.is_loading);
     return response;
   },
   function (error) {

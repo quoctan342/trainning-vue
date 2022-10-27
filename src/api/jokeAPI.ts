@@ -1,15 +1,15 @@
 import * as api from "./apiClient";
 
-const jokeAPI: Object = {
+const jokeAPI = {
   getJoke() {
     return api.get("", {});
   },
   getJokeByID(id: string) {
-    const path: string = `j/${id}`;
+    const path = `j/${id}` as string;
     return api.get(path, {});
   },
   getJokeByWords(words: string) {
-    const path: string = "search";
+    const path = "search" as string;
     return api.get(path, {
       params: {
         page: 1,
