@@ -6,7 +6,7 @@ import Vuelidate from "vuelidate";
 import vuetify from "./plugins/Vuetify";
 import VueMoment from "vue-moment";
 import "./styles/scss/main.scss";
-import "./plugins/Veevalidate";
+import "./plugins/Veevalidate/CustomRules";
 import "./plugins/Directive";
 
 Vue.config.productionTip = false;

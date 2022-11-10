@@ -39,7 +39,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "src/**/*.html"
-  ],
+, "tests/unit/testMethodsModalAddBook.spec.ts", "tests/unit/testMethodsModalAddBook.spec.ts"  ],
   "exclude": [
     "node_modules"
   ]
