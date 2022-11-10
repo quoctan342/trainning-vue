@@ -1,6 +1,6 @@
 export interface Book {
   id: number;
-  title: string;
+  title: string | undefined;
   author: string;
   category: string;
   cost: number;

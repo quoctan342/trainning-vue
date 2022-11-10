@@ -6,12 +6,8 @@
         width: 100%;
     }
 
-    &-error {
-        border: 1px solid red;
-    }
-
     &-invalid {
-        & .message {
+        & .input-error {
             color: #EB0600;
             font-size: 13px;
             font-weight: 500;

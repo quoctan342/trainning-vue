@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <vue-modal v-model="toggle" title="Add new book">
-      <ValidationObserver v-slot="{ invalid }" ref="form">
+  <vue-modal v-model="toggle" title="Add new book">
+    <ValidationObserver v-slot="{ handleSubmit }" ref="formAddBook">
+      <form @submit.prevent="handleSubmit(onSubmit)">
         <div class="form">
           <ValidationProvider
             name="Title"
             rules="required"
             v-slot="{ errors, classes }"
+            ref="title"
           >
             <div class="input-group">
               <label class="left" for="Title">Title:</label>
               <div class="right" :class="classes">
-                <input
-                  type="text"
-                  v-invalid="errors.length === 0"
-                  v-model.trim="title"
-                />
-                <div class="message">{{ errors[0] }}</div>
+                <input type="text" v-model.trim="title" id="ititle" />
+                <div class="input-error">{{ errors[0] }}</div>
               </div>
             </div>
           </ValidationProvider>
@@ -28,12 +25,8 @@
             <div class="input-group">
               <label class="left" for="Author">Author:</label>
               <div class="right" :class="classes">
-                <input
-                  type="text"
-                  v-invalid="errors.length === 0"
-                  v-model.trim="author"
-                />
-                <div class="message">{{ errors[0] }}</div>
+                <input type="text" v-model.trim="author" />
+                <div class="input-error">{{ errors[0] }}</div>
               </div>
             </div>
           </ValidationProvider>
@@ -55,12 +48,8 @@
             <div class="input-group">
               <label class="left" for="Cost">Cost:</label>
               <div class="right" :class="classes">
-                <input
-                  type="text"
-                  v-invalid="errors.length === 0"
-                  v-model.number="cost"
-                />
-                <div class="message">{{ errors[0] }}</div>
+                <input type="text" v-model.number="cost" />
+                <div class="input-error">{{ errors[0] }}</div>
               </div>
             </div>
           </ValidationProvider>
@@ -72,12 +61,8 @@
             <div class="input-group">
               <label class="left" for="Sale">Sale:</label>
               <div class="right" :class="classes">
-                <input
-                  type="text"
-                  v-invalid="errors.length === 0"
-                  v-model.number="sale"
-                />
-                <div class="message">{{ errors[0] }}</div>
+                <input type="text" v-model.number="sale" />
+                <div class="input-error">{{ errors[0] }}</div>
               </div>
             </div>
           </ValidationProvider>
@@ -101,13 +86,12 @@
                     <div :class="classes">
                       <input
                         type="text"
-                        v-invalid="errors.length === 0"
                         v-model="publishingdate"
                         id="PublishDate"
                         v-bind="attrs"
                         v-on="on"
                       />
-                      <div class="message">{{ errors[0] }}</div>
+                      <div class="input-error">{{ errors[0] }}</div>
                     </div>
                   </ValidationProvider>
                 </template>
@@ -129,16 +113,12 @@
           </div>
         </div>
 
-        <button
-          @click="handleAddBook"
-          :disabled="invalid"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="btn-add-book" class="btn btn-primary">
           Add
         </button>
-      </ValidationObserver>
-    </vue-modal>
-  </div>
+      </form>
+    </ValidationObserver>
+  </vue-modal>
 </template>
 
 <script lang="ts">
@@ -185,6 +165,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    disabledModal(): void {
+      this.toggle = !this.toggle;
+    },
     resetForm(): void {
       //reset form
       this.title = "";
@@ -193,6 +176,9 @@ export default Vue.extend({
       this.cost = "";
       this.sale = "";
       this.publishingdate = "";
+      this.$nextTick(() => {
+        this.$refs.form.reset();
+      });
     },
     handleAddBook(): void {
       this.$eventBus.$emit("onAddNewBook", {
@@ -204,11 +190,10 @@ export default Vue.extend({
         sale: this.sale == "" ? 0 : this.sale,
         publishingdate: this.publishingdate,
       });
-
-      this.$nextTick(() => {
-        this.$refs.form.reset();
-      });
-      this.toggle = !this.toggle;
+    },
+    onSubmit(): void {
+      this.handleAddBook();
+      this.disabledModal();
     },
   },
 });

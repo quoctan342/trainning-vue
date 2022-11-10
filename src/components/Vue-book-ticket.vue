@@ -21,26 +21,41 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { Book } from "@/types/index";
+import moment from "moment";
 
 export default Vue.extend({
   name: "vue-book",
   props: {
     item: {
       type: Object as PropType<Book>,
+      default: function () {
+        return {
+          id: 0,
+          title: "",
+          author: "",
+          category: "",
+          cost: 0,
+          sale: 0,
+          publishingdate: "",
+        } as Book;
+      },
     },
   },
   computed: {
     formatCost(): string {
-      return this.item.cost.toLocaleString("en-US", {
+      let result = this.item.cost?.toLocaleString("en-US", {
         style: "currency",
         currency: "VND",
       });
+      return typeof this.item.cost === "number" ? result : "";
     },
     formatSale(): string {
-      return this.item.sale === 0 ? "" : "-" + this.item.sale + "%";
+      return this.item.sale === 0 || typeof this.item.sale !== "number"
+        ? ""
+        : "-" + this.item.sale + "%";
     },
-    formatDate(): any {
-      return this.$moment(this.item.publishingdate).startOf("hour").fromNow();
+    formatDate(): string {
+      return moment(this.item.publishingdate).startOf("hour").fromNow();
     },
   },
 });
