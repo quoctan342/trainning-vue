@@ -2,25 +2,29 @@
   <div>
     <h2>Book page</h2>
     <div class="btn-group">
-      <button @click="toggleModalAddBook" class="btn btn-primary">
+      <button
+        @click="toggleModalAddBook"
+        id="add-book-vuelidate"
+        class="btn btn-primary"
+      >
         Add new book (using Vuelidate)
       </button>
-      <button @click="toggleModalAddBookVee" class="btn btn-primary">
+      <button
+        @click="toggleModalAddBookVee"
+        id="add-book-veevalidate"
+        class="btn btn-primary"
+      >
         Add new book (using Veevalidate)
       </button>
     </div>
-    <modal-new-book
+    <modal-add-book-vuelidate
       v-model="modalAddBook"
       :currentLastID="books.length"
-    ></modal-new-book>
-    <modal-add-book
+    ></modal-add-book-vuelidate>
+    <modal-add-book-veevalidate
       :currentLastID="books.length"
       v-model="modalAddBookVee"
-    ></modal-add-book>
-    <modal-add-book-vuetify
-      v-model="modalAddBookVuetify"
-      :currentLastID="books.length"
-    ></modal-add-book-vuetify>
+    ></modal-add-book-veevalidate>
     <div class="book-list">
       <div
         class="book-item"
@@ -40,8 +44,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import ModalNewBook from "@/modules/book/components/modal-new-book.vue";
-import ModalAddBook from "@/modules/book/components/modal-add-book.vue";
+import ModalAddBookVuelidate from "@/modules/book/components/modal-add-book-vuelidate.vue";
+import ModalAddBookVeevalidate from "@/modules/book/components/modal-add-book-veevalidate.vue";
 import { Book } from "@/types";
 import VueBookTicket from "@/components/Vue-book-ticket.vue";
 import { required, numeric } from "vuelidate/lib/validators";
@@ -50,8 +54,8 @@ import ModalUpdateBook from "@/modules/book/components/modal-update-book.vue";
 export default Vue.extend({
   name: "Book-page",
   components: {
-    ModalNewBook,
-    ModalAddBook,
+    "modal-add-book-vuelidate": ModalAddBookVuelidate,
+    "modal-add-book-veevalidate": ModalAddBookVeevalidate,
     "vue-book": VueBookTicket,
     "modal-update-book": ModalUpdateBook,
   },

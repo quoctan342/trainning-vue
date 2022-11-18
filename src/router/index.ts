@@ -1,85 +1,78 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import Vue from "vue";
+import VueRouter, { RouteConfig } from "vue-router";
+import AppVue from "@/App.vue";
 
 Vue.use(VueRouter);
-const DEFAULT_TITLE = 'Some Default Title';
+const DEFAULT_TITLE = "Some Default Title";
 
 const routes: Array<RouteConfig> = [
-    {
-        path: '/',
-        name: 'home',
+  {
+    path: "/",
+    component: () =>
+      import(
+        /* webpackChunkName: "books" */ "@/modules/article/views/layout.vue"
+      ),
+    children: [
+      {
+        path: "",
+        name: "Articles",
         meta: {
-            title: 'Home',
+          title: "Articles Page",
         },
-        component: HomeView,
-    },
-    {
-        path: '/article',
-        component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/layout.vue'),
-        children: [
-            {
-                path: '',
-                name: 'Articles',
-                meta: {
-                    title: 'Articles Page',
-                },
-                component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/index.vue'),
-            },
-            {
-                path: 'create',
-                name: 'CreateArticle',
-                meta: {
-                    title: 'Create Article Page',
-                },
-                component: () => import(/* webpackChunkName: "books" */ '@/modules/article/views/create.vue'),
-            },
-        ],
-    },
-    {
-        path: '/book',
-        name: 'Book',
+        component: () =>
+          import(
+            /* webpackChunkName: "books" */ "@/modules/article/views/index.vue"
+          ),
+      },
+      {
+        path: "create",
+        name: "CreateArticle",
         meta: {
-            title: 'Books Page',
+          title: "Create Article Page",
         },
-        component: () => import('@/modules/book/views/index.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: "books" */ "@/modules/article/views/create.vue"
+          ),
+      },
+    ],
+  },
+  {
+    path: "/book",
+    name: "Book",
+    meta: {
+      title: "Books Page",
     },
-    {
-        path: '/pokemon',
-        name: 'Pokemon',
-        meta: {
-            title: 'Pokemons Page',
-        },
-        component: () => import('@/modules/pokemon/views/index.vue'),
+    component: () => import("@/modules/book/views/index.vue"),
+  },
+  {
+    path: "/joke",
+    name: "Joke",
+    meta: {
+      title: "Joke Page",
     },
-    {
-        path: '/joke',
-        name: 'Joke',
-        meta: {
-            title: 'Joke Page',
-        },
-        component: () => import('@/modules/joke/views/index.vue'),
+    component: () => import("@/modules/joke/views/index.vue"),
+  },
+  {
+    path: "/bookwithvuex",
+    name: "Book With Vuex",
+    meta: {
+      title: "Book Page",
     },
-    {
-        path: '/bookwithvuex',
-        name: 'Book With Vuex',
-        meta: {
-            title: 'Book Page',
-        },
-        component: () => import('@/modules/bookWithVuex/views/index.vue'),
-    },
+    component: () => import("@/modules/bookWithVuex/views/index.vue"),
+  },
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
 });
 
 router.afterEach((to, from) => {
-    Vue.nextTick(() => {
-        document.title = to?.meta?.title || DEFAULT_TITLE;
-    });
+  Vue.nextTick(() => {
+    document.title = to?.meta?.title || DEFAULT_TITLE;
+  });
 });
 
 export default router;

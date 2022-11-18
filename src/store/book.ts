@@ -1,6 +1,6 @@
 import { Book, BookState } from "@/types/index";
 
-const state = {
+const state: BookState = {
   books: [
     {
       id: 1,

@@ -9,22 +9,41 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   function (config) {
-    store.commit("SET_LOADING", true);
-    console.log(store.state.is_loading);
+    if (store.state.reqPending === 0) {
+      store.commit("SET_LOADING", true);
+    }
+    store.commit("REQUEST_PENDING_ADD");
+
     return config;
   },
   function (error) {
+    store.commit("REQUEST_PENDING_DONE");
+
+    if (store.state.reqPending === 0) {
+      store.commit("SET_LOADING", false);
+    }
+
     return Promise.reject(error);
   }
 );
 
 axiosClient.interceptors.response.use(
   function (response) {
-    store.commit("SET_LOADING", false);
-    console.log(store.state.is_loading);
+    store.commit("REQUEST_PENDING_DONE");
+
+    if (store.state.reqPending === 0) {
+      store.commit("SET_LOADING", false);
+    }
+
     return response;
   },
   function (error) {
+    store.commit("REQUEST_PENDING_DONE");
+
+    if (store.state.reqPending === 0) {
+      store.commit("SET_LOADING", false);
+    }
+
     return Promise.reject(error);
   }
 );

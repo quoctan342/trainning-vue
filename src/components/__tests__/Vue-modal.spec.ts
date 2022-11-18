@@ -1,4 +1,5 @@
-import { mount } from "@vue/test-utils";
+import { mount, Wrapper } from "@vue/test-utils";
+import Vue from "vue";
 import VueModal from "../Vue-modal.vue";
 
 describe("Test component Vue Modal", () => {

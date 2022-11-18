@@ -28,8 +28,8 @@
 import Vue from "vue";
 import BookTicket from "@/components/Vue-book-ticket.vue";
 import { mapState } from "vuex";
-import ModalAddBookVuex from "@/modules/bookWithVuex/components/modal-add-book.vue";
-import ModalUpdateBookVuex from "../components/modal-update-book.vue";
+import ModalAddBookVuex from "@/modules/bookWithVuex/components/modal-add-book-vuex.vue";
+import ModalUpdateBookVuex from "../components/modal-update-book-vuex.vue";
 
 export default Vue.extend({
   name: "Book-Vuex-page",

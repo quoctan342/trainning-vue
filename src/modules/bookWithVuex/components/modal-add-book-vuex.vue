@@ -116,19 +116,22 @@
         </div>
       </div>
     </div>
-    <button @click="handleUpdateBook" class="btn btn-primary">Update</button>
+    <button id="btn-add-book" @click="handleAddBook" class="btn btn-primary">
+      Add
+    </button>
   </vue-modal>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import Vue from "vue";
 import { Book } from "@/types";
 import { required, numeric, maxValue } from "vuelidate/lib/validators";
 import VueModal from "@/components/Vue-modal.vue";
+import { mapMutations, mapState } from "vuex";
 import { validateDateBefore } from "@/plugins/Vuelidate/customValidate";
 
 export default Vue.extend({
-  name: "modal-update-book",
+  name: "modal-new-book-vuex",
   components: {
     VueModal,
   },
@@ -136,12 +139,6 @@ export default Vue.extend({
     value: {
       type: Boolean,
       default: false,
-    },
-    book: {
-      type: Object as PropType<Book>,
-      default: function () {
-        return {};
-      },
     },
   },
   data: () => ({
@@ -174,6 +171,7 @@ export default Vue.extend({
     validationGroup: ["title", "author", "cost", "sale", "publishingdate"],
   },
   computed: {
+    ...mapState("book", ["books"]),
     toggle: {
       get(): boolean {
         if (this.value === true) {
@@ -190,24 +188,25 @@ export default Vue.extend({
     },
   },
   methods: {
+    ...mapMutations("book", ["ADD_BOOK"]),
     resetForm(): void {
       //reset form
-      this.title = this.book.title;
-      this.author = this.book.author;
-      this.category = this.book.category;
-      this.cost = this.book.cost;
-      this.sale = this.book.sale;
-      this.publishingdate = this.book.publishingdate;
+      this.title = "";
+      this.author = "";
+      this.category = "Sách giáo khoa";
+      this.cost = "";
+      this.sale = "";
+      this.publishingdate = "";
       this.$v.$reset();
     },
-    handleUpdateBook(): void {
+    handleAddBook(): void {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         this.submitStatus = "OK";
         const book: Book = {
-          id: this.book.id,
+          id: this.books.length + 1,
           title: this.title,
           author: this.author,
           category: this.category,
@@ -215,9 +214,8 @@ export default Vue.extend({
           sale: this.sale == "" ? 0 : this.sale,
           publishingdate: this.publishingdate,
         };
-        this.$eventBus.$emit("onUpdateBook", {
-          ...book,
-        });
+        this.ADD_BOOK(book);
+
         this.toggle = !this.toggle;
       }
     },

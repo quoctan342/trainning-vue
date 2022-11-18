@@ -1,4 +1,5 @@
-import { mount } from "@vue/test-utils";
+import Vue from "vue";
+import { mount, Wrapper } from "@vue/test-utils";
 import VueBookTicket from "../Vue-book-ticket.vue";
 import { Book } from "@/types";
 
@@ -41,7 +42,7 @@ describe("Test component VueBookTicket", () => {
             cost: 100000,
           },
         });
-        expect(wrapper.vm.formatCost).toEqual("₫100,000");
+        expect(wrapper.vm.formatCost).toBe("₫100,000");
       });
       it("Value Cost isn't Invalid", async () => {
         await wrapper.setProps({
@@ -49,7 +50,7 @@ describe("Test component VueBookTicket", () => {
             cost: true,
           },
         });
-        expect(wrapper.vm.formatCost).toEqual("");
+        expect(wrapper.vm.formatCost).toBe("");
       });
       it("Variable Cost is empty", async () => {
         await wrapper.setProps({
@@ -57,7 +58,7 @@ describe("Test component VueBookTicket", () => {
             cost: "",
           },
         });
-        expect(wrapper.vm.formatCost).toEqual("");
+        expect(wrapper.vm.formatCost).toBe("");
       });
     });
     describe("+ Computed format sale", () => {
@@ -67,7 +68,7 @@ describe("Test component VueBookTicket", () => {
             sale: 22,
           },
         });
-        expect(wrapper.vm.formatSale).toEqual("-22%");
+        expect(wrapper.vm.formatSale).toBe("-22%");
       });
       it("Variable Sale have invalid value", async () => {
         await wrapper.setProps({
@@ -75,7 +76,7 @@ describe("Test component VueBookTicket", () => {
             sale: true,
           },
         });
-        expect(wrapper.vm.formatSale).toEqual("");
+        expect(wrapper.vm.formatSale).toBe("");
       });
       it("Variable Sale have valid is 0", async () => {
         await wrapper.setProps({
@@ -83,7 +84,7 @@ describe("Test component VueBookTicket", () => {
             sale: 0,
           },
         });
-        expect(wrapper.vm.formatSale).toEqual("");
+        expect(wrapper.vm.formatSale).toBe("");
       });
       it("Variable Sale is empty", async () => {
         await wrapper.setProps({
@@ -91,7 +92,7 @@ describe("Test component VueBookTicket", () => {
             sale: "",
           },
         });
-        expect(wrapper.vm.formatSale).toEqual("");
+        expect(wrapper.vm.formatSale).toBe("");
       });
     });
   });

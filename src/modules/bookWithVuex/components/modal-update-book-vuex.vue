@@ -120,21 +120,21 @@
           </div>
         </div>
       </div>
-      <button @click="handleAddBook" class="btn btn-primary">Add</button>
+      <button @click="handleUpdateBook" class="btn btn-primary">Update</button>
     </vue-modal>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropType } from "vue";
 import { Book } from "@/types";
 import { required, numeric, maxValue } from "vuelidate/lib/validators";
 import VueModal from "@/components/Vue-modal.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 import { validateDateBefore } from "@/plugins/Vuelidate/customValidate";
 
 export default Vue.extend({
-  name: "modal-new-book-vuex",
+  name: "modal-update-book-vuex",
   components: {
     VueModal,
   },
@@ -142,6 +142,12 @@ export default Vue.extend({
     value: {
       type: Boolean,
       default: false,
+    },
+    book: {
+      type: Object as PropType<Book>,
+      default: function () {
+        return {};
+      },
     },
   },
   data: () => ({
@@ -174,7 +180,6 @@ export default Vue.extend({
     validationGroup: ["title", "author", "cost", "sale", "publishingdate"],
   },
   computed: {
-    ...mapState("book", ["books"]),
     toggle: {
       get(): boolean {
         if (this.value === true) {
@@ -186,35 +191,38 @@ export default Vue.extend({
         this.$emit("input", value);
       },
     },
+    cost_calc(): number {
+      return this.cost - (this.cost * this.sale) / 100;
+    },
   },
   methods: {
-    ...mapMutations("book", ["ADD_BOOK"]),
+    ...mapMutations("book", ["UPDATE_BOOK"]),
     resetForm(): void {
       //reset form
-      this.title = "";
-      this.author = "";
-      this.category = "Sách giáo khoa";
-      this.cost = "";
-      this.sale = "";
-      this.publishingdate = "";
+      this.title = this.book.title;
+      this.author = this.book.author;
+      this.category = this.book.category;
+      this.cost = this.book.cost;
+      this.sale = this.book.sale;
+      this.publishingdate = this.book.publishingdate;
       this.$v.$reset();
     },
-    handleAddBook(): void {
+    handleUpdateBook(): void {
       this.$v.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
         this.submitStatus = "OK";
-        this.ADD_BOOK({
-          id: this.books.length + 1,
+        const book: Book = {
+          id: this.book.id,
           title: this.title,
           author: this.author,
           category: this.category,
-          cost: this.cost,
+          cost: this.cost_calc,
           sale: this.sale == "" ? 0 : this.sale,
           publishingdate: this.publishingdate,
-        });
-
+        };
+        this.UPDATE_BOOK(book);
         this.toggle = !this.toggle;
       }
     },
