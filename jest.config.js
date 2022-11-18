@@ -11,6 +11,6 @@ module.exports = {
     "**/src/**/*.spec.[jt]s?(x)",
   ],
   setupFilesAfterEnv: ['./jest.setup.js'],
-  // collectCoverage: true,
-  // collectCoverageFrom: ["**/*.{js,vue}", "!**/node_modules/**"],
+  collectCoverage: true,
+  collectCoverageFrom: ["**/*.{js,vue}", "!**/node_modules/**"],
 }

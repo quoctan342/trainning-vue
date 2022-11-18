@@ -43,7 +43,7 @@ export default Vue.extend({
   },
   computed: {
     formatCost(): string {
-      let result = this.item.cost?.toLocaleString("en-US", {
+      let result: string = this.item.cost?.toLocaleString("en-US", {
         style: "currency",
         currency: "VND",
       });

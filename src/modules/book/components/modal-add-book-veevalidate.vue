@@ -12,7 +12,7 @@
             <div class="input-group">
               <label class="left" for="Title">Title:</label>
               <div class="right" :class="classes">
-                <input type="text" v-model.trim="title" id="ititle" />
+                <input type="text" v-model.trim="title" />
                 <div class="input-error">{{ errors[0] }}</div>
               </div>
             </div>
@@ -128,7 +128,7 @@ import VueModal from "@/components/Vue-modal.vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 export default Vue.extend({
-  name: "modal-add-book",
+  name: "modal-add-book-veevalidate",
   components: {
     VueModal,
     ValidationProvider,
@@ -163,6 +163,9 @@ export default Vue.extend({
         this.$emit("input", value);
       },
     },
+    cost_calc(): number {
+      return this.cost - (this.cost * this.sale) / 100;
+    },
   },
   methods: {
     disabledModal(): void {
@@ -177,18 +180,21 @@ export default Vue.extend({
       this.sale = "";
       this.publishingdate = "";
       this.$nextTick(() => {
-        this.$refs.form.reset();
+        this.$refs.formAddBook.reset();
       });
     },
     handleAddBook(): void {
-      this.$eventBus.$emit("onAddNewBook", {
+      const book: Book = {
         id: this.currentLastID + 1,
         title: this.title,
         author: this.author,
         category: this.category,
-        cost: this.cost,
+        cost: this.cost_calc,
         sale: this.sale == "" ? 0 : this.sale,
         publishingdate: this.publishingdate,
+      };
+      this.$eventBus.$emit("onAddNewBook", {
+        ...book,
       });
     },
     onSubmit(): void {

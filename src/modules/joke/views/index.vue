@@ -4,13 +4,19 @@
       <h1>Joke Page</h1>
       <p>Random joke:</p>
       <div v-if="jokes.length > 0">
-        <div v-for="joke in jokes" :key="joke.id">
+        <div v-for="(joke, index) in jokes" :key="index" data-test="joke">
           {{ joke.joke }} (id: {{ joke.id }})
         </div>
       </div>
       <div class="btn-group">
-        <button @click="getAJoke" class="btn btn-primary">Get a joke</button>
-        <button @click="getMultiJoke(3)" class="btn btn-primary">
+        <button id="get-a-joke" @click="getAJoke" class="btn btn-primary">
+          Get a joke
+        </button>
+        <button
+          id="get-multi-joke"
+          @click="getMultiJoke(3)"
+          class="btn btn-primary"
+        >
           Get multi joke
         </button>
       </div>
@@ -36,10 +42,18 @@
       </div>
 
       <div class="btn-group">
-        <button @click="searchJokeByID" class="btn btn-primary">
+        <button
+          @click="searchJokeByID"
+          id="search-joke-id"
+          class="btn btn-primary"
+        >
           Search by ID
         </button>
-        <button @click="searchJokeByWords" class="btn btn-primary">
+        <button
+          id="search-joke-words"
+          @click="searchJokeByWords"
+          class="btn btn-primary"
+        >
           Search Joke by Words
         </button>
       </div>
